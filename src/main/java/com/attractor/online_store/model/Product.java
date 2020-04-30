@@ -1,9 +1,6 @@
-package com.attractor.online_store.Model;
-
+package com.attractor.online_store.model;
 
 import lombok.*;
-
-
 import javax.persistence.*;
 
 @Data
@@ -29,4 +26,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "productType_id")
     private ProductType type;
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s, %s, %d, %.2f",
+                this.name, this.image, this.description, this.qty, this.price);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.attractor.online_store.Model;
+package com.attractor.online_store.model;
 
 import lombok.Data;
 
