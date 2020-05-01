@@ -9,7 +9,7 @@
         <ul>
         <#list products as ft>
             <li>
-                <p>${ft.id} - ${ft.name} - ${ft.price} - ${ft.qty} - ${ft.image} - ${ft.type.name} </p>
+                <p>${ft.id} - ${ft.product} - ${ft.price} - ${ft.image} </p>
             </li>
         </#list>
         </ul>

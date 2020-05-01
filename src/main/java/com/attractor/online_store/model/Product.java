@@ -13,24 +13,36 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
     @Column(length = 128)
-    private String name;
+    private String product;
+
     @Column(length = 128)
     private String image;
-    @Column(length = 128)
-    private String description;
-    @Column(length = 128)
-    private Integer qty;
+
     @Column
     private float price;
-    @ManyToOne
-    @JoinColumn(name = "productType_id")
-    private ProductType type;
+
+    @Column(length = 128)
+    private String description;
+
+
+
+
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %d, %.2f",
-                this.name, this.image, this.description, this.qty, this.price);
+        return String.format("%s, %s, %s, %s, %s, %.2f, %s,",
+                this.id, this.category, this.brand, this.product,
+                this.image, this.price,this.description);
     }
 
 }
