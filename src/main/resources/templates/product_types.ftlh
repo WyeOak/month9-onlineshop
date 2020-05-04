@@ -5,12 +5,12 @@
         <title>Lesson 65. JPA & ORM</title>
     </head>
     <body>
-        <h1>Type</h1>
+        <h1>Содержимое страницы</h1>
 
         <ul>
-        <#list types as ft>
+        <#list ProductTypes as b>
             <li>
-                <p>${ft.id} - ${ft.name} - ${ft.icon}</p>
+                <p>${b.id} - ${b.name} - ${b.icon}</p>
             </li>
         </#list>
         </ul>
