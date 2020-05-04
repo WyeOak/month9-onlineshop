@@ -33,5 +33,3 @@
 </section>
 </body>
 </html>
-
-<script src="js/registration.js"></script>

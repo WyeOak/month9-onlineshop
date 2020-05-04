@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="container text-center">
-            <h1>Содержимое страницы</h1>
+            <h1>Products</h1>
             <section class="d-flex mx-auto">
                 <div class="my-5 mx-auto d-flex justify-content-around">
                     <#list products as s>
@@ -19,7 +19,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title">${s.name}</h5>
                                 <p class="card-text">${s.description}</p>
-                                <a href="#" class="btn btn-primary" style="width: 120px">info</a>
+                                <a href="#" class="btn btn-dark" style="width: 120px">info</a>
                             </div>
                         </div>
                     </#list>

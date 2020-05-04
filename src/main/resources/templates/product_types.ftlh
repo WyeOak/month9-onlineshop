@@ -5,7 +5,7 @@
         <title>Lesson 65. JPA & ORM</title>
     </head>
     <body>
-        <h1>Содержимое страницы</h1>
+        <h1>ProductTypes</h1>
 
         <ul>
         <#list ProductTypes as b>
