@@ -13,7 +13,7 @@
                         <h5 class="card-title">${s.name}</h5>
                         <p class="card-text">${s.description}</p>
                         <p class="card-text">${s.price} $</p>
-                        <a href="#" class="btn btn-primary" style="width: 120px">info</a>
+                        <a href="#" class="btn btn-secondary" style="width: 120px">info</a>
                     </div>
                 </div>
             </#list>

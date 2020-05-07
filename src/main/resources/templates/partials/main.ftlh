@@ -33,7 +33,7 @@
     <header class="header">
         <div class="container d-flex justify-content-around">
             <nav class="navbar">
-                <a href="/register" class="btn btn-primary text-center">
+                <a href="/register" class="btn btn-secondary text-center">
                     register
                 </a>
             </nav>
@@ -51,7 +51,7 @@
                                 <option>in description</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">search</button>
+                        <button type="submit" class="btn btn-secondary">search</button>
                     </div>
                 </form>
             </nav>
