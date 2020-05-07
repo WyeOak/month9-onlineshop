@@ -14,18 +14,18 @@ public class ProductDTO {
     private int id;
     private String name;
     private String image;
-    private ProductTypeDTO brand;
+    private ProductTypeDTO productType;
     private String description;
     private float price;
 
-    public static ProductDTO from(Product smartphone) {
+    public static ProductDTO from(Product product) {
         return builder()
-                .id(smartphone.getId())
-                .name(smartphone.getName())
-                .brand(ProductTypeDTO.from(smartphone.getType()))
-                .description(smartphone.getDescription())
-                .image(smartphone.getImage())
-                .price(smartphone.getPrice())
+                .id(product.getId())
+                .name(product.getName())
+                .productType(ProductTypeDTO.from(product.getType()))
+                .description(product.getDescription())
+                .image(product.getImage())
+                .price(product.getPrice())
                 .build();
     }
 }

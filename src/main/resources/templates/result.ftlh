@@ -5,7 +5,7 @@
 <div class="container text-center">
     <section class="d-flex mx-auto">
         <div class="my-5 mx-auto d-flex justify-content-around">
-            <#list products as s>
+            <#list smartphones as s>
                 <div class="card mx-1" style="">
                     <img class="card-img-top " style="height: 200px; width: auto" src="../images/${s.image}"
                          alt="${s.image}">
@@ -19,6 +19,7 @@
             </#list>
         </div>
     </section>
+    <#include "partials/pagination.ftlh">
 </div>
 
     </@main.renderWith>
