@@ -12,7 +12,7 @@ public class UserDTO {
     private String login;
     private String email;
 
-    static UserDTO from(User user) {
+    public static UserDTO from(User user) {
         return builder().id(user.getId())
                 .email(user.getEmail())
                 .login(user.getLogin())

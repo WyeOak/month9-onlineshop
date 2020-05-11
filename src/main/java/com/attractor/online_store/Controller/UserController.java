@@ -1,8 +1,7 @@
 package com.attractor.online_store.Controller;
 
-import com.attractor.online_store.Service.ProductService;
-import com.attractor.online_store.User.UserRegisterForm;
 import com.attractor.online_store.Service.UserService;
+import com.attractor.online_store.User.UserRegisterForm;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,26 +9,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserController {
 
     private final UserService service;
-    private final ProductService smartphoneService;
-
-    @GetMapping("/index")
-    public String root(Model model) {
-        model.addAttribute("products", smartphoneService.findAllProducts());
-        return "index";
-    }
 
     @GetMapping("/register")
     public String userRegisterPage(Model model) {
-        if(!model.containsAttribute("form")) {
+        if (!model.containsAttribute("form")) {
             model.addAttribute("form", new UserRegisterForm());
         }
         return "/register";
@@ -37,22 +31,31 @@ public class UserController {
 
     @RequestMapping("/register")
     public String register(@Valid UserRegisterForm form,
-                            BindingResult validationResult,
-                            RedirectAttributes attributes) {
+                           BindingResult validationResult,
+                           RedirectAttributes attributes) {
         attributes.addFlashAttribute("form");
-
         if (validationResult.hasFieldErrors()) {
             attributes.addFlashAttribute("errors", validationResult.getFieldErrors());
             return "redirect:/register";
         }
-
         if (service.checkUser(form)) {
             attributes.addFlashAttribute("user", form);
             return "redirect:/register";
         }
+        service.register(form);
+        return "redirect:/login";
+    }
 
-        service.saveUser(form);
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(required = false, defaultValue = "false") Boolean error, Model model) {
+        model.addAttribute("error", error);
+        return "login";
+    }
 
-        return "redirect:/index";
+    @GetMapping("/profile")
+    public String pageCustomerProfile(Model model, Principal principal) {
+        var user = service.getByEmail(principal.getName());
+        model.addAttribute("dto", user);
+        return "profile";
     }
 }
