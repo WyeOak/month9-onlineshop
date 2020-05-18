@@ -15,7 +15,7 @@
                            placeholder="Login"><br>
                     <input type="password" name="password" class="form-control mb-1" value="${form.password!''}"
                            placeholder="Password"><br>
-                    <button class="btn btn-outline-primary btn-block" type="submit">Register</button>
+                    <button class="btn btn-outline-secondary btn-block" type="submit">Register</button>
                     <br>
                     <#if errors?? >
                         <p>Invalid fields!</p>

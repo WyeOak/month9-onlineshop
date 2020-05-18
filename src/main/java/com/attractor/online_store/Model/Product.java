@@ -40,7 +40,7 @@ public class Product {
     @Override
     public String toString() {
         return String.format("%s, %s, %s, %d, %.2f",
-                 this.name, this.image, this.description, this.qty, this.price);
+                this.name, this.image, this.description, this.qty, this.price);
     }
 
 }

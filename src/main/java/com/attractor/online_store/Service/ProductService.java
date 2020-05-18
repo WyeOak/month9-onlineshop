@@ -1,9 +1,9 @@
 package com.attractor.online_store.Service;
 
-import com.attractor.online_store.DTO.ProductDTO;
-import com.attractor.online_store.DTO.ProductTypeDTO;
 import com.attractor.online_store.Repository.ProductRepository;
 import com.attractor.online_store.Repository.ProductTypeRepository;
+import com.attractor.online_store.DTO.ProductDTO;
+import com.attractor.online_store.DTO.ProductTypeDTO;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,11 +19,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductTypeRepository productTypeRepository;
 
-    public List<ProductDTO> findAllProducts() {
-        return productRepository.findAll().stream()
-                .map(ProductDTO::from).collect(Collectors.toList());
-    }
-
     public List<ProductTypeDTO> findAllProductTypes() {
         return productTypeRepository.findAll().stream()
                 .map(ProductTypeDTO::from).collect(Collectors.toList());
@@ -37,10 +32,10 @@ public class ProductService {
         Page<ProductDTO> sm;
         if(param.equals("by name")) {
             sm = productRepository.findAllByNameContains(pageable, text).map(ProductDTO::from);
-        } else if(param.equals("by product type")) {
+        } else if(param.equals("by type")) {
             sm = productRepository.findAllByTypeContains(pageable, text).map(ProductDTO::from);
         } else if(param.equals("by price")) {
-            sm = productRepository.findAllByPriceIsLessThanEqual(pageable, Float.parseFloat(text.trim())).map((ProductDTO::from));
+            sm = productRepository.findAllByPriceIsLessThanEqualOrderByPriceDesc(pageable, Float.parseFloat(text.trim())).map((ProductDTO::from));
         } else {
             sm = productRepository.findAllByDescriptionContains(pageable, text).map(ProductDTO::from);
         }

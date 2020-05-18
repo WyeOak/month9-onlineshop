@@ -1,11 +1,11 @@
 package com.attractor.online_store.Service;
 
-import com.attractor.online_store.DTO.UserDTO;
 import com.attractor.online_store.Model.User;
 import com.attractor.online_store.Repository.UserRepository;
-import com.attractor.online_store.User.UserAlreadyRegisteredException;
-import com.attractor.online_store.User.UserNotFoundException;
-import com.attractor.online_store.User.UserRegisterForm;
+import com.attractor.online_store.domain.user.UserAlreadyRegisteredException;
+import com.attractor.online_store.DTO.UserDTO;
+import com.attractor.online_store.domain.user.UserNotFoundException;
+import com.attractor.online_store.domain.user.UserRegisterForm;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +18,7 @@ public class UserService {
     private PasswordEncoder encoder;
 
     public boolean checkUser(UserRegisterForm form) {
-        return userRepository.existsByLoginAndEmail(form.getLogin(), form.getEmail());
+       return userRepository.existsByLoginAndEmail(form.getLogin(), form.getEmail());
     }
 
     public void register(UserRegisterForm form) {
@@ -38,4 +38,5 @@ public class UserService {
                 .orElseThrow(UserNotFoundException::new);
         return UserDTO.from(user);
     }
+
 }

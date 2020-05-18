@@ -1,7 +1,7 @@
 package com.attractor.online_store.Controller;
 
+import com.attractor.online_store.domain.user.UserRegisterForm;
 import com.attractor.online_store.Service.UserService;
-import com.attractor.online_store.User.UserRegisterForm;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;

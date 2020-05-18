@@ -31,15 +31,10 @@
     этот шаблон
     -->
     <header class="header">
-        <div class="container d-flex justify-content-around ">
-
+        <div class="container d-flex justify-content-around">
             <nav class="navbar">
-                <#if dto??>
-                    <p>${dto.login}</p>
-                <#else>
-                    <a href="/login" class="btn btn-secondary text-center">
-                        login
-                    </a>
+                <#if dto??><a href="/profile" class="btn btn-secondary text-center"> profile </a>
+                    <#else> <a href="/login" class="btn btn-secondary text-center"> login </a>
                 </#if>
             </nav>
             <nav class="navbar">
@@ -61,6 +56,7 @@
     <#list scripts as scriptSource>
         <script src="${scriptSource}"></script>
     </#list>
+    <script src="js/main.js"> </script>
     </body>
     </html>
 

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-@Entity
+@Entity(name = "UserEntity")
 @Builder
 @Table(name = "users")
 @NoArgsConstructor
@@ -36,5 +36,7 @@ public class User {
     @Column(length = 128)
     @Builder.Default
     private String role = "USER";
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
 }
-
