@@ -16,7 +16,7 @@
                            placeholder="enter checking token"><br>
                     <input type="text" name="password" class="form-control mb-1"
                            placeholder="new password"><br>
-                    <button class="btn btn-outline-secondary btn-block" type="submit">reset</button>
+                    <button class="btn btn-outline-primary btn-block" type="submit">reset</button>
                     <br>
                 </form>
             </div>

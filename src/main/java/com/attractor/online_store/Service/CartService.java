@@ -1,6 +1,7 @@
 package com.attractor.online_store.Service;
 
 import com.attractor.online_store.Model.Cart;
+import com.attractor.online_store.Model.User;
 import com.attractor.online_store.Repo.CartRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,9 @@ public class CartService {
 
     public void saveCart(Cart c) {
         repository.save(c);
+    }
+
+    public Cart getUserCart(User user) {
+        return repository.findByUser_Id(user.getId());
     }
 }

@@ -82,7 +82,7 @@ public class FrontendController {
             var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
             model.addAttribute("dto", user);
 //            if(cartService.checkUserCart(user.getId())) {
-//                model.addAttribute("cart", cartService.getUserCart(user.getId()));
+            model.addAttribute("cart", service.getUserCart(user.getId()).size());
 //            }
         }
         return "index";

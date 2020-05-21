@@ -8,6 +8,8 @@ import com.attractor.online_store.Repo.CartRepository;
 import com.attractor.online_store.Repo.ProductRepository;
 import com.attractor.online_store.Repo.UserRepository;
 
+import com.attractor.online_store.Service.CartService;
+import com.attractor.online_store.Service.ProductService;
 import com.attractor.online_store.domain.cart.Constants;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,12 +29,17 @@ class CartController {
     private final UserRepository userRepository;
     private final CartRepository cartRepository;
     private final CartProductRepository repo;
+    private final ProductService service;
+    private final CartService cService;
 
     @GetMapping("/cart")
-    public String cart(Model model, @SessionAttribute(name = Constants.CART_ID, required = false) List<Product> cart) {
-        if (cart != null) {
-            model.addAttribute("cartItems", cart);
+    public String cart(Model model, @SessionAttribute(name = Constants.CART_ID, required = false)
+            List<Product> cart, HttpServletRequest request) {
+        var user = userRepository.findByEmail(request.getUserPrincipal().getName()).get();
+        if (user != null) {
+            model.addAttribute("cartItems", service.getUserCart(user.getId()));
         }
+
         return "cart";
     }
 
@@ -44,7 +51,6 @@ class CartController {
         if (cart != null) {
             cart.add(repository.findById(Integer.parseInt(value)).get());
         }
-
         return true;
     }
 
@@ -53,12 +59,17 @@ class CartController {
     @PostMapping("/cart/add")
     public String addToList(@RequestParam String value, HttpSession session, HttpServletRequest uriBuilder) {
         int sId = Integer.parseInt(value);
-        Cart c = new Cart();
-        c.setUser(userRepository.findByEmail(uriBuilder.getUserPrincipal().getName()).get());
-        c.setSession(session.getId());
-        cartRepository.save(c);
+        var user = userRepository.findByEmail(uriBuilder.getUserPrincipal().getName()).get();
+        if(!cService.checkUserCart(user.getId())) {
+            session.removeAttribute(Constants.CART_ID);
+            Cart c = new Cart();
+            c.setUser(userRepository.findByEmail(uriBuilder.getUserPrincipal().getName()).get());
+            c.setSession(session.getId());
+            cartRepository.save(c);
+        }
+        var cart = cService.getUserCart(user);
         CartProduct sc = new CartProduct();
-        sc.setCart(c);
+        sc.setCart(cart);
         sc.setSession(session.getId());
         sc.setProduct(repository.findById(sId).get());
         repo.save(sc);
@@ -80,10 +91,13 @@ class CartController {
 
     @PostMapping("/cart/buy")
     public String buy(HttpSession session, HttpServletRequest request) {
-       session.removeAttribute(Constants.CART_ID);
-//       var userId = userRepository.findByEmail(request.getUserPrincipal().getName()).get().getId();
-//       cartRepository.deleteAllByUser_id(userId);
-       return "redirect:/cart/feedback";
+        session.removeAttribute(Constants.CART_ID);
+        var user = userRepository.findByEmail(request.getUserPrincipal().getName()).get();
+        if (cService.checkUserCart(user.getId())) {
+            cartRepository.delete(cService.getUserCart(user));
+            return "redirect:/cart/feedback";
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/cart/feedback")
@@ -103,6 +117,10 @@ class CartController {
     @PostMapping("/cart/empty")
     public String emptyCart(HttpSession session, HttpServletRequest request) {
         session.removeAttribute(Constants.CART_ID);
+        var user = userRepository.findByEmail(request.getUserPrincipal().getName()).get();
+        if (cService.checkUserCart(user.getId())) {
+            cartRepository.delete(cService.getUserCart(user));
+        }
         return "redirect:/cart";
     }
 }

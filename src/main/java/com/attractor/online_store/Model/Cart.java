@@ -2,6 +2,7 @@ package com.attractor.online_store.Model;
 
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -25,6 +26,7 @@ public class Cart {
     private String session;
 
     @OneToMany(mappedBy = "cart")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public List<CartProduct> carts;
 
     @Override

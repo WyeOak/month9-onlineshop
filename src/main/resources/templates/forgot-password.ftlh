@@ -14,7 +14,7 @@
                     </#if>
                     <input type="email" name="email" class="form-control mb-1" autofocus
                            placeholder="email"><br>
-                    <button class="btn btn-outline-secondary btn-block" type="submit">send</button>
+                    <button class="btn btn-outline-primary btn-block" type="submit">send</button>
                     <br>
                 </form>
             </div>

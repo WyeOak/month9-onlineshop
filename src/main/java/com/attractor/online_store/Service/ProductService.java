@@ -1,6 +1,9 @@
 package com.attractor.online_store.Service;
 
 import com.attractor.online_store.DTO.ProductDTO;
+import com.attractor.online_store.Model.Product;
+import com.attractor.online_store.Model.User;
+import com.attractor.online_store.Repo.CartRepository;
 import com.attractor.online_store.Repo.ProductRepository;
 import com.attractor.online_store.Repo.ProductTypeRepository;
 import lombok.AccessLevel;
@@ -17,6 +20,7 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductTypeRepository productTypeRepository;
+    private final CartRepository cartRepository;
 
     public List<ProductDTO.ProductTypeDTO> findAllProductTypes() {
         return productTypeRepository.findAll().stream()
@@ -27,17 +31,27 @@ public class ProductService {
         return productRepository.findAll(pageable).map(ProductDTO::from);
     }
 
+    public List<Product> getUserCart(int userId) {
+        return productRepository.findAllByUserId(userId);
+    }
+
+    public void deleteUserCart(User user) {
+        cartRepository.deleteAll();
+    }
+
     public Page<ProductDTO> searchProducts(Pageable pageable, String param, String text) {
         Page<ProductDTO> sm;
         if(param.equals("by name")) {
             sm = productRepository.findAllByNameContains(pageable, text).map(ProductDTO::from);
         } else if(param.equals("by type")) {
-            sm = productRepository.findAllByTypeContains(pageable, text).map(ProductDTO::from);
+            sm = productRepository.findAllByType_Name(pageable, text).map(ProductDTO::from);
         } else if(param.equals("by price")) {
-            sm = productRepository.findAllByPriceIsLessThanEqualOrderByPriceDesc(pageable, Float.parseFloat(text.trim())).map((ProductDTO::from));
+            sm = productRepository.findAllByPriceIsLessThanEqual(pageable, Double.parseDouble(text.trim())).map((ProductDTO::from));
         } else {
             sm = productRepository.findAllByDescriptionContains(pageable, text).map(ProductDTO::from);
         }
         return sm;
     }
+
+
 }

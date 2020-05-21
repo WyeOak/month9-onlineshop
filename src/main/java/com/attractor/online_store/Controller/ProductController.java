@@ -13,7 +13,7 @@ public class ProductController {
 
     private final ProductService service;
 
-    @RequestMapping("/brands")
+    @RequestMapping("/types")
     public String getTypes(Model model) {
         model.addAttribute("types", service.findAllProductTypes());
         return "brands";
