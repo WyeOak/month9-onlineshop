@@ -4,17 +4,18 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
 @Entity
-@Table(name = "products")
+@Table(name = "Product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     @NotBlank
     @Size(min = 4)
     @Column(length = 128)
@@ -27,20 +28,23 @@ public class Product {
     private String description;
     @PositiveOrZero
     @Column(length = 128)
-    private Integer qty;
+    private int qty;
     @Positive
     @Column
-    private float price;
+    private double price;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "productType_id")
+    @JoinColumn(name = "type_id")
     private ProductType type;
+
+    @OneToMany(mappedBy = "id")
+    List<CartProduct> carts;
 
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %d, %.2f",
-                this.name, this.image, this.description, this.qty, this.price);
+        return String.format("id=%d, name=%s, image=%s, description=%s, qty=%d, price=%.2f", this.id,
+                 this.name, this.image, this.description, this.qty, this.price);
     }
 
 }

@@ -1,13 +1,14 @@
 package com.attractor.online_store.Controller;
 
-import com.attractor.online_store.Service.CartService;
-import com.attractor.online_store.domain.cart.KeyValueRequestDto;
+import com.attractor.online_store.DTO.KeyValueRequestDto;
 import com.attractor.online_store.domain.exception.ResourceNotFoundException;
+import com.attractor.online_store.Repo.ProductTypeRepository;
+import com.attractor.online_store.domain.product.SearchForm;
 import com.attractor.online_store.Model.Product;
 import com.attractor.online_store.Service.ProductService;
-import com.attractor.online_store.domain.Product.SearchForm;
 import com.attractor.online_store.Service.UserService;
-import com.attractor.online_store.Service.PropertiesService;
+
+import com.attractor.online_store.frontend.PropertiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,7 +36,7 @@ public class FrontendController {
     @Autowired
     private UserService userService;
     @Autowired
-    private CartService cartService;
+    private ProductTypeRepository prT;
 
     private static <T> void constructPageable(Page<T> list, int pageSize, Model model, String uri) {
         if (list.hasNext()) {
@@ -59,6 +60,7 @@ public class FrontendController {
     @GetMapping
     public String index(Model model, Pageable pageable, HttpServletRequest uriBuilder, HttpSession session) {
         var map = new HashMap<String, Object>();
+        
         map.put("Идентификатор сессии", session.getId());
 
         session.getAttributeNames()
@@ -68,7 +70,6 @@ public class FrontendController {
         model.addAttribute("sessionAttributes", map);
 
         List<Product> list = (List<Product>) session.getAttribute("_cart_");
-        System.out.println(list);
         if(list.size() != 0) {
             model.addAttribute("cart", list.size());
         }
@@ -80,9 +81,9 @@ public class FrontendController {
         if(uriBuilder.getUserPrincipal() != null) {
             var user = userService.getByEmail(uriBuilder.getUserPrincipal().getName());
             model.addAttribute("dto", user);
-            if(cartService.checkUserCart(user.getId())) {
-                model.addAttribute("cart", cartService.getUserCart(user.getId()));
-            }
+//            if(cartService.checkUserCart(user.getId())) {
+//                model.addAttribute("cart", cartService.getUserCart(user.getId()));
+//            }
         }
         return "index";
     }

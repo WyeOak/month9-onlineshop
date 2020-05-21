@@ -1,4 +1,4 @@
-package com.attractor.online_store.Repository;
+package com.attractor.online_store.Repo;
 
 import com.attractor.online_store.Model.Product;
 import org.springframework.data.domain.Page;

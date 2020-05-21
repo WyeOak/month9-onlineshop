@@ -1,4 +1,4 @@
-package com.attractor.online_store.Service;
+package com.attractor.online_store.frontend;
 
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;

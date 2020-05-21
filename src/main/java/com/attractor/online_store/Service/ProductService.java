@@ -1,9 +1,8 @@
 package com.attractor.online_store.Service;
 
-import com.attractor.online_store.Repository.ProductRepository;
-import com.attractor.online_store.Repository.ProductTypeRepository;
 import com.attractor.online_store.DTO.ProductDTO;
-import com.attractor.online_store.DTO.ProductTypeDTO;
+import com.attractor.online_store.Repo.ProductRepository;
+import com.attractor.online_store.Repo.ProductTypeRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,9 +18,9 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductTypeRepository productTypeRepository;
 
-    public List<ProductTypeDTO> findAllProductTypes() {
+    public List<ProductDTO.ProductTypeDTO> findAllProductTypes() {
         return productTypeRepository.findAll().stream()
-                .map(ProductTypeDTO::from).collect(Collectors.toList());
+                .map(ProductDTO.ProductTypeDTO::from).collect(Collectors.toList());
     }
 
     public Page<ProductDTO> getProducts(Pageable pageable) {

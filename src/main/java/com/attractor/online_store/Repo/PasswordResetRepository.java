@@ -1,0 +1,18 @@
+package com.attractor.online_store.Repo;
+
+import com.attractor.online_store.Model.User;
+import com.attractor.online_store.domain.user.PasswordResetToken;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+public interface PasswordResetRepository extends JpaRepository<PasswordResetToken, Integer> {
+
+    PasswordResetToken getByToken(String token);
+
+    @Query(value = "select p.user from PasswordResetToken p where p.id = 1")
+    List<User> findAllUser();
+
+    boolean existsByToken(String token);
+}
